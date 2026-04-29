@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { SurveyService } from '../../services/survey.service';
 import { SurveySummary } from '../../models/survey.model';
 import { AuthService } from '../../services/auth.service';
@@ -8,7 +9,7 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-survey-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink],
   template: `
     <div class="page-header">
       <h1 class="page-title">问卷列表</h1>
@@ -201,6 +202,7 @@ export class SurveyListComponent implements OnInit {
         status: 'PUBLISHED',
         isAnonymous: true,
         deadline: null,
+        isTemplate: false,
         responseCount: 156,
         createdAt: '2024-01-15T00:00:00Z',
         createdBy: '产品团队'
@@ -212,6 +214,7 @@ export class SurveyListComponent implements OnInit {
         status: 'PUBLISHED',
         isAnonymous: true,
         deadline: '2024-12-31T23:59:59Z',
+        isTemplate: false,
         responseCount: 89,
         createdAt: '2024-02-01T00:00:00Z',
         createdBy: '市场部'
@@ -223,6 +226,7 @@ export class SurveyListComponent implements OnInit {
         status: 'CLOSED',
         isAnonymous: true,
         deadline: '2024-03-31T23:59:59Z',
+        isTemplate: false,
         responseCount: 234,
         createdAt: '2024-03-01T00:00:00Z',
         createdBy: '人力资源部'
