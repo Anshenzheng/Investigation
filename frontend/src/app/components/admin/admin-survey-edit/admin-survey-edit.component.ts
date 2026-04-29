@@ -128,7 +128,7 @@ import { Survey, QuestionType } from '../../../models/survey.model';
                       @for (option of getOptions(i).controls; track optIdx; let optIdx = $index) {
                         <div [formGroupName]="optIdx" style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
                           <span style="font-size: 14px; color: var(--text-secondary); width: 24px; flex-shrink: 0;">
-                            {{ String.fromCharCode(65 + optIdx) }}.
+                            {{ getOptionLabel(optIdx) }}.
                           </span>
                           <input type="text" formControlName="text" class="form-control" placeholder="选项内容">
                           <button type="button" (click)="removeOption(i, optIdx)" class="btn btn-danger btn-sm" 
@@ -230,17 +230,15 @@ export class AdminSurveyEditComponent implements OnInit {
 
   private createQuestionGroup(question?: any): FormGroup {
     const options = question?.options || [];
-    const optionsArray = this.fb.array(
-      options.map((opt: any) => this.fb.group({
-        id: [opt.id || null],
-        text: [opt.text || ''],
-        order: [opt.order || 0]
-      }))
-    );
+    const optionGroups = options.map((opt: any) => this.fb.group({
+      id: [opt.id || null],
+      text: [opt.text || ''],
+      order: [opt.order || 0]
+    }));
 
-    if (optionsArray.length === 0 && (question?.type === 'SINGLE_CHOICE' || question?.type === 'MULTIPLE_CHOICE')) {
-      optionsArray.push(this.fb.group({ id: [null], text: ['选项A'], order: [0] }));
-      optionsArray.push(this.fb.group({ id: [null], text: ['选项B'], order: [1] }));
+    if (optionGroups.length === 0 && (question?.type === 'SINGLE_CHOICE' || question?.type === 'MULTIPLE_CHOICE')) {
+      optionGroups.push(this.fb.group({ id: [null], text: ['选项A'], order: [0] }));
+      optionGroups.push(this.fb.group({ id: [null], text: ['选项B'], order: [1] }));
     }
 
     return this.fb.group({
@@ -249,7 +247,7 @@ export class AdminSurveyEditComponent implements OnInit {
       type: [question?.type || 'SINGLE_CHOICE'],
       required: [question?.required ?? true],
       order: [question?.order || 0],
-      options: optionsArray
+      options: this.fb.array(optionGroups)
     });
   }
 
@@ -283,6 +281,10 @@ export class AdminSurveyEditComponent implements OnInit {
     if (options.length > 1) {
       options.removeAt(optionIndex);
     }
+  }
+
+  getOptionLabel(index: number): string {
+    return String.fromCharCode(65 + index);
   }
 
   private prepareSaveData(): SurveyCreateRequest | SurveyUpdateRequest {
