@@ -1,0 +1,17 @@
+package com.wenji.survey.repository;
+
+import com.wenji.survey.entity.Question;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+import java.util.List;
+
+@Repository
+public interface QuestionRepository extends JpaRepository<Question, Long> {
+    
+    List<Question> findBySurveyIdOrderByOrderIndex(Long surveyId);
+    
+    @Query("SELECT q FROM Question q LEFT JOIN FETCH q.options WHERE q.survey.id = :surveyId ORDER BY q.orderIndex")
+    List<Question> findBySurveyIdWithOptions(@Param("surveyId") Long surveyId);
+}
