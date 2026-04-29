@@ -56,6 +56,7 @@ export interface SurveySummary {
   status: SurveyStatus;
   isAnonymous: boolean;
   deadline: string | null;
+  isTemplate: boolean;
   responseCount: number;
   createdAt: string;
   createdBy: string;
