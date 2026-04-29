@@ -129,6 +129,7 @@ export class FavoritesComponent implements OnInit {
         status: 'PUBLISHED',
         isAnonymous: true,
         deadline: null,
+        isTemplate: false,
         responseCount: 156,
         createdAt: '2024-01-15T00:00:00Z',
         createdBy: '产品团队'
@@ -140,6 +141,7 @@ export class FavoritesComponent implements OnInit {
         status: 'PUBLISHED',
         isAnonymous: true,
         deadline: '2024-12-31T23:59:59Z',
+        isTemplate: false,
         responseCount: 89,
         createdAt: '2024-02-01T00:00:00Z',
         createdBy: '市场部'

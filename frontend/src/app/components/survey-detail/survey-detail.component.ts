@@ -82,7 +82,7 @@ import { AuthService } from '../../services/auth.service';
                 <div style="padding-left: 28px;">
                   @for (option of question.options; track option.id; let optIndex = $index) {
                     <div style="font-size: 14px; color: var(--text-secondary); padding: 4px 0;">
-                      {{ String.fromCharCode(65 + optIndex) }}. {{ option.text }}
+                      {{ getOptionLabel(optIndex) }}. {{ option.text }}
                     </div>
                   }
                 </div>
@@ -204,6 +204,10 @@ export class SurveyDetailComponent implements OnInit {
   isDeadlinePassed(deadline: string | null): boolean {
     if (!deadline) return false;
     return new Date(deadline) < new Date();
+  }
+
+  getOptionLabel(index: number): string {
+    return String.fromCharCode(65 + index);
   }
 
   toggleFavorite(): void {
